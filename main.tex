@@ -190,6 +190,7 @@
 \input{./lib/listings.tex}
 \input{./lib/notes.tex}
 \input{./lib/stack.tex}
+\input{./lib/card.tex}
 
 \newcommand\ce[1]{%
   \coloremojiucs{#1}
@@ -409,27 +410,37 @@
 
 \begin{frame}
   \frametitle{従来手法 \ballcircle{2}公平な第三者を用いたAND計算}
-    
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-  ]{+}{orange!10}{%
-    そもそもチャーリーが信頼できるのか？
-  }
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-  ]{-}{cyan!10}{%
-    \noindent
-    次のケース\ce{:point_down:}で\textbf{情報リーク}が生じる！\\
-    \hbox to 0.5\textwidth{%
-      \vbox{%
-      \begin{enumerate}
-        \item アリスが奢り、ボブは割勘を希望
-        \item アリスが割勘、ボブは奢りを希望\label{enum:bob_detect}
-        \item アリスが奢り、ボブは奢りを希望
-      \end{enumerate}
+  
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{+}{orange!10}{%
+        そもそもチャーリーが信頼できるのか？
       }
-    }
-  }
+
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{-}{cyan!10}{%
+        \noindent
+        次のケース\ce{:point_down:}で\textbf{情報リーク}が生じる！\\
+        \hbox to 0.5\textwidth{%
+          \vbox{%
+            \begin{enumerate}
+              \item アリスが奢り、ボブは割勘を希望
+              \item アリスが割勘、ボブは奢りを希望\label{enum:bob_detect}
+              \item アリスが奢り、ボブは奢りを希望
+            \end{enumerate}
+          }
+        }
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{itemize}
+        \item AND計算なので片方の入力と結果から、残った入力が逆算できる場合がある
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -448,18 +459,17 @@
         {\includegraphics[width=\facesize]{./img/alice_face.png}}%
       ]{-}{cyan!10}{%
         しかし\ballcircle{2}の方法では\\
-        \textbf{不本意な結果を強いられた側}の\\
+        \textbf{高目の支払いを強いられた側}の\\
         情報がリークすることがある\ce{:rage:}
       }
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{itemize}
         \item たとえば「アリスが割勘・ボブは奢りを希望」のとき、
-        結果は割勘となりボブはアリスの希望を特定するので、
-        ボブは奢りを回避してさらにアリスのがめつさも知ることができる
+        結果は割勘となる。
+        ボブは奢りを回避してさらにアリスの上品さも知ることができる
 
-        \item ちなみにこのときアリスも結果の割勘から、
-        ボブが割勘を希望したことを特定する
+        \item しかしアリスはボブの希望を知ることはできない
       \end{itemize}
     \end{column}
   \end{columns}
@@ -477,7 +487,7 @@
       ]{+}{orange!10}{%
         表\ref{tbl:choice_and_info_leak}のようにランダムを導入したうえで、\\
         不本意な結果を強いられた側だけが\\
-        相手の希望が判明するというのはどうか？
+        相手の希望を得るというのはどうか？
       }
 
       \simplecallout[%
@@ -520,8 +530,68 @@
   \simplecallout[%
     {\includegraphics[width=\facesize]{./img/alice_face.png}}%
   ]{-}{cyan!10}{%
-    このときアリスはボブが奢りが本意か不本意か分からないが、奢られを得る
+    このときアリスはボブの奢りが本意か不本意か分からないが、奢られを得る
   }
+\end{frame}
+
+\begin{frame}
+  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+  ]{+}{cyan!10}{%
+    逆にアリスが不本意に割勘となってしまった場合、\\
+    ボブの希望は割勘だと特定する
+  }
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+  ]{-}{orange!10}{%
+    しかしこのときボブはアリスの希望が分からない
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{手順}
+
+  このプロトコルはチャーリー（\emph{trusted third party}）\textbf{なし}で達成できる
+
+  \pause
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{enumerate}
+        \item アリス・ボブに2枚のカード\heartcard,\clubcard を配る\footnote{%
+          これらのカードはトランプのようにいずれも裏が\commitedcard となっており、
+          裏向きになった状態でどちらのカードなのか特定することができない
+        }
+        \item アリス・ボブは表\ref{tbl:card_meaning}に従って
+        希望を裏向き\commitedcard にして提出する\label{enum:cards_commited}
+
+        \item \ballref{enum:cards_commited}で提出されたカードをシャッフルする
+        
+        \item どちらか1枚をドローして表向きにする。カードを表\ref{tbl:card_meaning}させた
+        ものがプロトコルの結果となる
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{table}[h]
+        \renewcommand{\arraystretch}{1.5}
+        \caption{カードの意味}
+        \label{tbl:card_meaning}
+        \begin{tabularx}{0.9\textwidth}{@{}| Y | Y |@{}}
+          \hline
+          カード & 意味 \\ \hline
+          \heartcard & ボブの奢り \\ \hline
+          \clubcard & 割勘 \\ \hline
+        \end{tabularx}
+      \end{table}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{ケーススタディ}
+
 \end{frame}
 
 \section{まとめ}
@@ -531,15 +601,11 @@
 
   \pause
   \begin{itemize}
-    \item<+-> カロリーを制限しつつ運動をすれば痩せる
+    \item<+-> 簡単なプロトコルで奢り・割勘問題に決着をつけられるかもしれない
 
-    \item<+-> リバウンドを警戒するなら、筋トレをやって筋肉をある程度は搭載したほうがいい
+    \item<+-> 今回紹介した技術は``Covert Lottery\cite{covert_lottery}''という名前が付いている
 
-    \item<+-> 株や不動産に投資するという考え方もあるが、それと同様にフィジカルに投資するという考え方もある
-
-    \item<+-> ただダイエットは一度はじめたら基本的にはずっとやらないといけないので注意が必要
-
-    \item<+-> 筋トレに興味がある人はSlackの\texttt{\#e\_muscle-ja}にJOIN！
+    \item<+-> 今回は2人だったが、これを多人数拡張すると別のゲームに使えるかもしれない
   \end{itemize}
 \end{frame}
 
