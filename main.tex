@@ -1,0 +1,559 @@
+% for notes environment
+\usepackage{xsavebox}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{luatexja}
+\usepackage[hiragino-pro,deluxe,nfssonly,jis2004]{luatexja-preset}
+\usepackage{fontspec}
+\usepackage{epigraph}
+\usepackage{etoolbox}
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{bxcoloremoji}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage{caption}
+\usepackage{appendixnumberbeamer}
+\usepackage{multirow}
+\usepackage{xpatch}
+\usepackage{multicol}
+\usepackage{tabularx}
+
+\usetikzlibrary{fit}
+
+\setmonofont{CMU Typewriter Text}
+
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+% \usefonttheme{serif}
+
+
+\xpatchcmd{\itemize}
+  {\def\makelabel}
+  {\ifnum\@itemdepth=1\relax
+     \setlength\itemsep{1.2ex}% separation for first level
+   \else
+     \ifnum\@itemdepth=2\relax
+       \setlength\itemsep{0.8ex}% separation for second level
+       \setlength\topsep{1.2ex}
+     \else
+       \ifnum\@itemdepth=3\relax
+         \setlength\itemsep{0.05ex}% separation for third level
+         \setlength\topsep{0.8ex}
+   \fi\fi\fi\def\makelabel
+  }
+ {}
+ {}
+
+\setbeamercolor{page number in head/foot}{bg=blue!10}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor\hspace*{1ex}(\insertshortinstitute)
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+      \insertshortdate{} @ \InsertConference
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{page number in head/foot}%
+      \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\beamertemplatenavigationsymbolsempty
+
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamersize{description width=1cm}
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=2em
+  {%
+    \usebeamerfont*{itemize item}%
+    \usebeamercolor{subsection number projected}%
+    \color{bg}%
+    \raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}%
+  \hskip1.5ex\inserttocsubsection\par}
+
+% Definitions for the title page
+\newcommand*{\GitHub}[1]{%
+  \gdef\InsertGitHub{#1}%
+}
+\newcommand*{\Email}[1]{%
+  \gdef\InsertEmail{\href{mailto:#1}{#1}}%
+}
+\newcommand*{\Conference}[1]{%
+  \gdef\InsertConference{#1}%
+}
+\setbeamerfont{title}{size=\huge, series=\bfseries, family=\mcfamily\rmfamily}
+\setbeamercolor{title}{bg=white}
+\setbeamerfont{subtitle}{size=\Large, series=\mdseries, family=\gtfamily\sffamily}
+\setbeamerfont{email}{size=\scriptsize, family=\ttfamily}
+\setbeamercolor{email}{bg=white}
+\setbeamerfont{date}{shape=\itshape, family=\rmfamily}
+\setbeamerfont{vc}{size=\scriptsize, family=\ttfamily}
+\setbeamercolor{vc}{bg=white}
+
+\renewcommand{\figurename}{Fig}
+
+\input{vc.tex}
+
+\setbeamertemplate{title page}
+{%
+  \vbox{}
+  \vfill
+  \begingroup
+    \centering
+    \hrulefill\par%
+    \vskip1ex\par%
+    \begin{beamercolorbox}[sep=0pt,center,shadow=false,rounded=true]{title}
+      \vfill
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.5ex%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%
+      \vfill  
+    \end{beamercolorbox}%
+    \hrulefill\par%
+    \vskip2ex%
+    \begin{beamercolorbox}[sep=0pt,center,shadow=false,rounded=true]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=0pt,center,shadow=false,rounded=true]{email}
+      \usebeamerfont{email}\InsertEmail
+    \end{beamercolorbox}
+    \vskip0.1ex
+    \begin{beamercolorbox}[sep=5pt,center,shadow=false,rounded=true]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=5pt,center,shadow=false,rounded=true]{date}
+      \usebeamerfont{date}\insertdate \normalfont @ \InsertConference
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=0pt,center,shadow=false,rounded=true]{vc}
+      \usebeamerfont{vc}
+      \url{https://github.com/\InsertGitHub} (\texttt{\GITAbrHash})
+    \end{beamercolorbox}
+    % {\centering
+    %   \href{https://creativecommons.org/licenses/by-nc/4.0/}{%
+    %     \includegraphics[width=0.1\textwidth]{img/by-nc.pdf}%
+    %   }%
+    % }
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \endgroup
+  \vfill
+}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% ============ ここを消すとNote消える ================
+% \mode<handout>{%
+%   \usepackage{pgfpages}
+%   \setbeameroption{show notes on second screen=right}
+%   \setbeamertemplate{note page}{%
+%     \vspace{2ex}\insertnote%
+%   }
+% }
+% ============ ここを消すとNote消える ================
+
+
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+
+\setbeamertemplate{caption}[numbered]
+\resetcounteronoverlays{lstlisting}
+\definecolor{bluegray}{rgb}{0.4, 0.6, 0.8}
+\DeclareCaptionFormat{listing}{{\color{bluegray}\lstlistingname}#2#3}
+\captionsetup[lstlisting]{format=listing, font={footnotesize}}
+\captionsetup[figure]{name={図}}
+\captionsetup[table]{name={表}}
+\setbeamerfont{footnote}{size=\scriptsize}
+
+\setmonofont[Ligatures=TeX]{CMU Typewriter Text}
+
+\setbeamertemplate{items}[circle]
+
+\input{./lib/quotebox.tex}
+\input{./lib/footnotemark.tex}
+\input{./lib/ballon.tex}
+\input{./lib/callout.tex}
+\input{./lib/listings.tex}
+\input{./lib/notes.tex}
+\input{./lib/stack.tex}
+
+\newcommand\ce[1]{%
+  \coloremojiucs{#1}
+}
+
+\newcommand*{\lstitem}[1]{
+  \setbox0\hbox{\lstinline{#1}}
+  \item[\usebox0]
+}
+
+\presetkeys{todonotes}{inline, noinlinepar}{}
+
+\title[奢り・割勘プロトコル]{%
+  奢り・割勘プロトコル
+}
+\subtitle{}
+\author[吉村 優]{%
+  吉村 優（\textsc{Yoshimura} Hikaru）
+}
+\Email{hikaru\_yoshimura@r.recruit.co.jp}
+\date[January 25, 2023]{%
+  \oldstylenums{January 25, 2023}
+}
+\Conference{社会人語学プロ開2023年3月期4Q部会}
+\institute[\InsertEmail]{株式会社リクルート（Recruit Co., Ltd）}
+\GitHub{y-yu/fair-or-all-slide}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\section{はじめに}
+
+\begin{frame}
+  \frametitle{目次}
+
+  \tableofcontents
+\end{frame}
+
+\begin{frame}
+  \frametitle{自己紹介}
+  
+  \begin{columns}
+    \begin{column}{0.3\textwidth}
+      \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.95\textwidth]{img/bird2x.png}
+        \end{figure}
+      \end{center}
+ 
+      \begin{table}[h]
+        \begin{tabular}{ll}
+          Twitter & \href{https://twitter.com/\_yyu\_}{@\_yyu\_} \\
+          Qiita &  \href{https://qiita.com/yyu}{yyu} \\
+          GitHub &  \href{https://github.com/y-yu}{y-yu} \\
+        \end{tabular}
+      \end{table}
+    \end{column}
+    \begin{column}{0.7\textwidth}
+      \begin{itemize}
+        \item 筑波大学 情報学群 情報科学類卒（2011-15,学士）
+        \begin{itemize}
+          \item プログラム論理研究室、WORD編集部
+        \end{itemize}
+        
+        \item ドワンゴ ニコニコ動画 アカウントチーム
+
+        \item 未踏ターゲット2018（ゲート式量子コンピュータ）
+
+        \item CTF（\url{https://urandom.team/}）
+        \begin{itemize}
+          \item SECCON CTF 2022で世界57位（国内20位）
+        \end{itemize}
+
+        \item プログラミング
+        \begin{itemize}
+          \item Scala, \LaTeX, Rust, Go, Swift
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{奢り・割勘問題}
+
+\begin{frame}
+  \frametitle{奢り・割勘問題}
+
+  \begin{figure}[h]
+    \includegraphics[width=0.65\textwidth]{./img/twitter.png}\cite{Y_N_Hoshi}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{奢り・割勘問題}
+
+  \begin{shadequote}[r]{}
+    \begin{center}
+      アリスとボブの飲食費について下記のいずれにするか決定する問題
+      \begin{enumerate}
+        \item ボブが全額を奢る
+        \item 割勘とする
+      \end{enumerate}
+    \end{center}
+  \end{shadequote}
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \emph{アリス（Alice）}
+
+      \begin{figure}[h]
+        \includegraphics[height=0.4\textheight]{img/alice.png}
+      \end{figure}
+    \end{column}
+   
+    \begin{column}{0.5\textwidth}
+      \centering
+      \emph{ボブ（Bob）}
+
+      \begin{figure}[h]
+        \includegraphics[height=0.4\textheight]{img/bob.png}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{従来手法}
+
+\newcommand{\facesize}{1cm}
+
+\begin{frame}
+  \frametitle{従来手法 \ballcircle{1}コイントス}
+
+  \begin{enumerate}
+    \item アリス・ボブの間でコイントスを行う
+
+    \item その結果に応じて次のように決定する
+    \begin{description}
+      \item[結果が表] ボブが全額奢る
+      \item[結果が裏] 割勘
+    \end{description}
+  \end{enumerate}
+
+  \pause
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+  ]{+}{orange!10}{%
+    当事者たちの意見が何も反映されないためプライバシーは完全\ce{:person_gesturing_ok:}
+  }
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+  ]{-}{cyan!10}{%
+    しかしゲーム性は全くない
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{従来手法 \ballcircle{1}コイントス}
+
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{+}{cyan!10}{%
+        そもそもこのゲームはアリスが有利\ce{:smiling_imp:}
+      }
+
+      \simplecallout[%
+       {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{-}{orange!10}{%
+        そもそも不公平なゲームなので、\\
+        50:50ではおもしろくない
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{itemize}
+        \item ボブが支払うのは50\% or 100\%だが
+        \item 一方でアリスは0\% or 50\%
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\begin{frame}
+  \frametitle{従来手法 \ballcircle{2}公平な第三者によるAND計算}
+
+  \pause
+  \begin{enumerate}
+    \item アリスとボブは公平な第三者チャーリーに$\text{\textbf{希望}} \in \{\text{奢り}, \text{割勘}\}$を渡す
+    \item チャーリーはアリス・ボブの希望を次の表\ref{tbl:and_table}に基づいてAND演算する
+    \item チャーリーが結果を2人に通知する
+  \end{enumerate}
+
+  \begin{table}[h]
+    \caption{奢り・割勘AND演算}
+    \label{tbl:and_table}
+    \begin{tabularx}{0.7\textwidth}{@{}| Y | Y || Y |@{}}
+      \hline
+      アリス & ボブ & 結果 \\ \hline
+      割勘  & 割勘 & 割勘 \\ \hline
+      割勘  & 奢り & 割勘 \\ \hline
+      奢り  & 割勘 & 割勘 \\ \hline
+      奢り  & 奢り & 奢り \\ \hline
+    \end{tabularx}
+  \end{table}
+
+  \begin{itemize}
+    \item ボブは$\frac{3}{4}$の確率で50\%の支払い、
+    $\frac{1}{4}$の確率で100\%の支払いなので期待値は$\frac{5}{8}$（62.5\%）の支払い
+
+    \item 同様の計算でアリスは期待値$\frac{3}{8}$（37.5\%）の支払い
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{従来手法 \ballcircle{2}公平な第三者を用いたAND計算}
+    
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+  ]{+}{orange!10}{%
+    そもそもチャーリーが信頼できるのか？
+  }
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+  ]{-}{cyan!10}{%
+    \noindent
+    次のケース\ce{:point_down:}で\textbf{情報リーク}が生じる！\\
+    \hbox to 0.5\textwidth{%
+      \vbox{%
+      \begin{enumerate}
+        \item アリスが奢り、ボブは割勘を希望
+        \item アリスが割勘、ボブは奢りを希望\label{enum:bob_detect}
+        \item アリスが奢り、ボブは奢りを希望
+      \end{enumerate}
+      }
+    }
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{従来手法 \ballcircle{2}公平な第三者によるAND計算}
+
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{+}{orange!10}{%
+        希望が場合によっては流出するのは\\
+        ゲーム性とみなすことができそう\ce{:thinkig_face:}
+      }
+
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{-}{cyan!10}{%
+        しかし\ballcircle{2}の方法では\\
+        \textbf{不本意な結果を強いられた側}の\\
+        情報がリークすることがある\ce{:rage:}
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{itemize}
+        \item たとえば「アリスが割勘・ボブは奢りを希望」のとき、
+        結果は割勘となりボブはアリスの希望を特定するので、
+        ボブは奢りを回避してさらにアリスのがめつさも知ることができる
+
+        \item ちなみにこのときアリスも結果の割勘から、
+        ボブが割勘を希望したことを特定する
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{提案手法}
+
+\begin{frame}
+  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
+
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{+}{orange!10}{%
+        表\ref{tbl:choice_and_info_leak}のようにランダムを導入したうえで、\\
+        不本意な結果を強いられた側だけが\\
+        相手の希望が判明するというのはどうか？
+      }
+
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{-}{cyan!10}{%
+        互いの希望がマッチした場合には\\
+        情報が一切リークしない
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{table}[h]
+        \caption{奢り・割勘と情報リーク}
+        \label{tbl:choice_and_info_leak}
+        \begin{tabular}{|l|l|c|c|}
+          \hline
+          アリス & ボブ & 結果   & 情報 \\ \hline
+          割勘  & 割勘 & 割勘   & \dagger \\ \hline
+          割勘  & 奢り & ランダム & \ddagger \\ \hline
+          奢り  & 割勘 & ランダム & \ddagger  \\ \hline
+          奢り  & 奢り & 奢り   & \dagger \\ \hline
+        \end{tabular}
+
+        \footnotetext[1]{お互いの希望はいずれもリークしない} 
+        \footnotetext[2]{結果が奢りの場合はアリスの希望がボブへ、結果が割勘の場合はボブの希望がアリスへリークする}
+      \end{table}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+  ]{+}{orange!10}{%
+    期待値的にはボブが不公平なままだが、\\
+    もし不本意に奢った場合はアリスのがめつさが分かる
+  }
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+  ]{-}{cyan!10}{%
+    このときアリスはボブが奢りが本意か不本意か分からないが、奢られを得る
+  }
+\end{frame}
+
+\section{まとめ}
+
+\begin{frame}
+  \frametitle{まとめ}
+
+  \pause
+  \begin{itemize}
+    \item<+-> カロリーを制限しつつ運動をすれば痩せる
+
+    \item<+-> リバウンドを警戒するなら、筋トレをやって筋肉をある程度は搭載したほうがいい
+
+    \item<+-> 株や不動産に投資するという考え方もあるが、それと同様にフィジカルに投資するという考え方もある
+
+    \item<+-> ただダイエットは一度はじめたら基本的にはずっとやらないといけないので注意が必要
+
+    \item<+-> 筋トレに興味がある人はSlackの\texttt{\#e\_muscle-ja}にJOIN！
+  \end{itemize}
+\end{frame}
+
+\section*{参考文献}
+\begin{frame}%[allowframebreaks]
+  \frametitle{参考文献}
+  \nocite{*}
+  \bibliographystyle{junsrt_url}
+  \bibliography{ref}
+\end{frame}
+
+\begin{frame}
+  \centering
+  {\Huge Thank you for the attention!}
+\end{frame}
+
+\end{document}
