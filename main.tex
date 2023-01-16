@@ -203,6 +203,8 @@
 
 \presetkeys{todonotes}{inline, noinlinepar}{}
 
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
 \title[奢り・割勘プロトコル]{%
   奢り・割勘プロトコル
 }
@@ -325,21 +327,34 @@
 \begin{frame}
   \frametitle{従来手法 \ballcircle{1}コイントス}
 
-  \begin{enumerate}
-    \item アリス・ボブの間でコイントスを行う
-
-    \item その結果に応じて次のように決定する
-    \begin{description}
-      \item[結果が表] ボブが全額奢る
-      \item[結果が裏] 割勘
-    \end{description}
-  \end{enumerate}
-
+  \vspace{-0.2cm}
   \pause
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{enumerate}
+        \item 2人でコイントスを行う
+
+        \item 表\ref{tbl:coin_meaning}に基づいて決定する
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{table}[h]
+        \caption{コインの意味}
+        \label{tbl:coin_meaning}
+        \begin{tabularx}{0.9\textwidth}{@{}| Y | Y |@{}}
+          \hline
+          コインの結果 & 意味 \\ \hline
+          表 & ボブの奢り \\ \hline
+          裏 & 割勘 \\ \hline
+        \end{tabularx}
+      \end{table}
+    \end{column}
+  \end{columns}
+
   \simplecallout[%
     {\includegraphics[width=\facesize]{./img/bob_face.png}}%
   ]{+}{orange!10}{%
-    当事者たちの意見が何も反映されないためプライバシーは完全\ce{:person_gesturing_ok:}
+    2人の意見が何も反映されないためプライバシーは完全\ce{:person_gesturing_ok:}
   }
 
   \simplecallout[%
@@ -376,7 +391,6 @@
   \end{columns}
 \end{frame}
 
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
 \begin{frame}
   \frametitle{従来手法 \ballcircle{2}公平な第三者によるAND計算}
 
@@ -437,7 +451,7 @@
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{itemize}
-        \item AND計算なので片方の入力と結果から、残った入力が逆算できる場合がある
+        \item AND計算なので片方の入力と結果から、残りの入力を逆算できる場合がある
       \end{itemize}
     \end{column}
   \end{columns}
@@ -458,8 +472,8 @@
       \simplecallout[%
         {\includegraphics[width=\facesize]{./img/alice_face.png}}%
       ]{-}{cyan!10}{%
-        しかし\ballcircle{2}の方法では\\
-        \textbf{高目の支払いを強いられた側}の\\
+        しかし、この方法では\\
+        \textbf{高目の支払いを強いられたアリス}の\\
         情報がリークすることがある\ce{:rage:}
       }
     \end{column}
