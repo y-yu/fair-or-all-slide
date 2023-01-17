@@ -384,8 +384,8 @@
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{itemize}
-        \item ボブが支払うのは50\% or 100\%だが
-        \item 一方でアリスは0\% or 50\%
+        \item ボブが支払うのは安目で50\%高目で100\%だが、
+        一方でアリスは安目0\%高目でも50\%
       \end{itemize}
     \end{column}
   \end{columns}
@@ -551,18 +551,34 @@
 \begin{frame}
   \frametitle{コイントスとAND計算のハイブリッドプロトコル}
 
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-  ]{+}{cyan!10}{%
-    逆にアリスが不本意に割勘となってしまった場合、\\
-    ボブの希望は割勘だと特定する
-  }
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{+}{cyan!10}{%
+        逆にアリスが不本意に\\
+        割勘となってしまった場合、\\
+        ボブの希望は割勘だと特定する
+      }
 
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-  ]{-}{orange!10}{%
-    しかしこのときボブはアリスの希望が分からない
-  }
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{-}{orange!10}{%
+        しかしこのときボブは\\
+        アリスの希望が分からない
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{itemize}
+        \item アリスが不本意に割勘となった場合、
+        アリスは奢りを希望していたがボブは割勘を希望しており、
+        ランダムで割勘となった
+
+        \item このように希望通りになった側は相手の希望が分からず、
+        希望通りにならかった側は相手の希望を知ることができる
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -583,7 +599,7 @@
 
         \item \ballref{enum:cards_commited}で提出されたカードをシャッフルする
         
-        \item どちらか1枚をドローして表向きにする。カードを表\ref{tbl:card_meaning}させた
+        \item どちらか1枚をドローして表向きにする。カードを表\ref{tbl:card_meaning}に対応させた
         ものがプロトコルの結果となる
       \end{enumerate}
     \end{column}
