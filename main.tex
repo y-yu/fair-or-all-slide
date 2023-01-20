@@ -334,6 +334,7 @@
       \begin{enumerate}
         \item 2人でコイントスを行う
 
+        \pause
         \item 表\ref{tbl:coin_meaning}に基づいて決定する
       \end{enumerate}
     \end{column}
@@ -351,12 +352,14 @@
     \end{column}
   \end{columns}
 
+  \pause
   \simplecallout[%
     {\includegraphics[width=\facesize]{./img/bob_face.png}}%
   ]{+}{orange!10}{%
     2人の意見が何も反映されないためプライバシーは完全\ce{:person_gesturing_ok:}
   }
 
+  \pause
   \simplecallout[%
     {\includegraphics[width=\facesize]{./img/alice_face.png}}%
   ]{-}{cyan!10}{%
@@ -375,6 +378,7 @@
         そもそもこのゲームはアリスが有利\ce{:smiling_imp:}
       }
 
+      \pause
       \simplecallout[%
        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
       ]{-}{orange!10}{%
@@ -392,33 +396,35 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{従来手法 \ballcircle{2}公平な第三者によるAND計算}
+  \frametitle{従来手法 \ballcircle{2}公平な第三者を用いたAND計算}
 
   \pause
   \begin{enumerate}
-    \item アリスとボブは公平な第三者チャーリーに$\text{\textbf{希望}} \in \{\text{奢り}, \text{割勘}\}$を渡す
-    \item チャーリーはアリス・ボブの希望を次の表\ref{tbl:and_table}に基づいてAND演算する
-    \item チャーリーが結果を2人に通知する
+    \item<+-> アリスとボブは公平な第三者チャーリーに$\text{\textbf{希望}} \in \{\text{奢り}, \text{割勘}\}$を渡す
+    \item<+-> チャーリーはアリス・ボブの希望を次の表\ref{tbl:and_table}に基づいてAND演算する
+    \item<+-> チャーリーが結果を2人に通知する
   \end{enumerate}
 
-  \begin{table}[h]
-    \caption{奢り・割勘AND演算}
-    \label{tbl:and_table}
-    \begin{tabularx}{0.7\textwidth}{@{}| Y | Y || Y |@{}}
-      \hline
-      アリス & ボブ & 結果 \\ \hline
-      割勘  & 割勘 & 割勘 \\ \hline
-      割勘  & 奢り & 割勘 \\ \hline
-      奢り  & 割勘 & 割勘 \\ \hline
-      奢り  & 奢り & 奢り \\ \hline
-    \end{tabularx}
-  \end{table}
+  \uncover<+(-2)->{
+    \begin{table}[h]
+      \caption{奢り・割勘AND演算}
+      \label{tbl:and_table}
+      \begin{tabularx}{0.7\textwidth}{@{}| Y | Y || Y |@{}}
+        \hline
+        アリス & ボブ & 結果 \\ \hline
+        割勘  & 割勘 & 割勘 \\ \hline
+        割勘  & 奢り & 割勘 \\ \hline
+        奢り  & 割勘 & 割勘 \\ \hline
+        奢り  & 奢り & 奢り \\ \hline
+      \end{tabularx}
+    \end{table}
+  }
 
   \begin{itemize}
-    \item ボブは$\frac{3}{4}$の確率で50\%の支払い、
+    \item<+(-1)-> ボブは$\frac{3}{4}$の確率で50\%の支払い、
     $\frac{1}{4}$の確率で100\%の支払いなので期待値は$\frac{5}{8}$（62.5\%）の支払い
 
-    \item 同様の計算でアリスは期待値$\frac{3}{8}$（37.5\%）の支払い
+    \item<+(-1)-> 同様の計算でアリスは期待値$\frac{3}{8}$（37.5\%）の支払い
   \end{itemize}
 \end{frame}
 
@@ -427,12 +433,14 @@
   
   \begin{columns}
     \begin{column}{0.6\textwidth}
+      \pause
       \simplecallout[%
         {\includegraphics[width=\facesize]{./img/bob_face.png}}%
       ]{+}{orange!10}{%
         そもそもチャーリーが信頼できるのか？
       }
 
+      \pause
       \simplecallout[%
         {\includegraphics[width=\facesize]{./img/alice_face.png}}%
       ]{-}{cyan!10}{%
@@ -458,7 +466,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{従来手法 \ballcircle{2}公平な第三者によるAND計算}
+  \frametitle{従来手法 \ballcircle{2}公平な第三者を用いたAND計算}
 
   \begin{columns}
     \begin{column}{0.6\textwidth}
@@ -466,9 +474,10 @@
         {\includegraphics[width=\facesize]{./img/bob_face.png}}%
       ]{+}{orange!10}{%
         希望が場合によっては流出するのは\\
-        ゲーム性とみなすことができそう\ce{:thinkig_face:}
+        ゲーム性とみなすことができそう！\ce{:thinkig_face:}
       }
 
+      \pause
       \simplecallout[%
         {\includegraphics[width=\facesize]{./img/alice_face.png}}%
       ]{-}{cyan!10}{%
@@ -494,40 +503,47 @@
 \begin{frame}
   \frametitle{コイントスとAND計算のハイブリッドプロトコル}
 
+  \pause
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{+}{orange!10}{%
-        表\ref{tbl:choice_and_info_leak}のようにランダムを導入したうえで、\\
-        不本意な結果を強いられた側だけが\\
-        相手の希望を得るというのはどうか？
+      \uncover<+-> {
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+        ]{+}{orange!10}{%
+          表\ref{tbl:choice_and_info_leak}のようにランダムを導入したうえで、\\
+          不本意な結果を強いられた側だけが\\
+          相手の希望を得るというのはどうか？
+        }
       }
 
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{-}{cyan!10}{%
-        互いの希望がマッチした場合には\\
-        情報が一切リークしない
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+        ]{-}{cyan!10}{%
+          互いの希望がマッチした場合には\\
+          情報が一切リークしない
+        }
       }
     \end{column}
-    \begin{column}{0.4\textwidth}
-      \begin{table}[h]
-        \caption{奢り・割勘と情報リーク}
-        \label{tbl:choice_and_info_leak}
-        \begin{tabular}{|l|l|c|c|}
-          \hline
-          アリス & ボブ & 結果   & 情報 \\ \hline
-          割勘  & 割勘 & 割勘   & \dagger \\ \hline
-          割勘  & 奢り & ランダム & \ddagger \\ \hline
-          奢り  & 割勘 & ランダム & \ddagger  \\ \hline
-          奢り  & 奢り & 奢り   & \dagger \\ \hline
-        \end{tabular}
+    \uncover<1->{
+      \begin{column}{0.4\textwidth}
+          \begin{table}[h]
+            \caption{奢り・割勘と情報リーク}
+            \label{tbl:choice_and_info_leak}
+            \begin{tabular}{|l|l|c|c|}
+              \hline
+              アリス & ボブ & 結果   & 情報 \\ \hline
+              割勘  & 割勘 & 割勘   & \dagger \\ \hline
+              割勘  & 奢り & ランダム & \ddagger \\ \hline
+              奢り  & 割勘 & ランダム & \ddagger  \\ \hline
+              奢り  & 奢り & 奢り   & \dagger \\ \hline
+            \end{tabular}
 
-        \footnotetext[1]{お互いの希望はいずれもリークしない} 
-        \footnotetext[2]{結果が奢りの場合はアリスの希望がボブへ、結果が割勘の場合はボブの希望がアリスへリークする}
-      \end{table}
-    \end{column}
+            \footnotetext[1]{お互いの希望はいずれもリークしない} 
+            \footnotetext[2]{結果が奢りの場合はアリスの希望がボブへ、結果が割勘の場合はボブの希望がアリスへリークする}
+          \end{table}
+      \end{column}
+    }
   \end{columns}
 \end{frame}
 
@@ -541,6 +557,7 @@
     もし不本意に奢った場合はアリスのがめつさが分かる
   }
 
+  \pause
   \simplecallout[%
     {\includegraphics[width=\facesize]{./img/alice_face.png}}%
   ]{-}{cyan!10}{%
@@ -553,30 +570,36 @@
 
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{+}{cyan!10}{%
-        逆にアリスが不本意に\\
-        割勘となってしまった場合、\\
-        ボブの希望は割勘だと特定する
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+        ]{+}{cyan!10}{%
+          逆にアリスが不本意に\\
+          割勘となってしまった場合、\\
+          ボブの希望は割勘だと特定する
+        }
       }
 
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{-}{orange!10}{%
-        しかしこのときボブは\\
-        アリスの希望が分からない
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+        ]{-}{orange!10}{%
+          しかしこのときボブは\\
+          アリスの希望が分からない
+        }
       }
     \end{column}
     \begin{column}{0.4\textwidth}
-      \begin{itemize}
-        \item アリスが不本意に割勘となった場合、
-        アリスは奢りを希望していたがボブは割勘を希望しており、
-        ランダムで割勘となった
+      \uncover<+(-2)->{
+        \begin{itemize}
+          \item アリスが不本意に割勘となった場合、
+          アリスは奢りを希望していたがボブは割勘を希望しており、
+          ランダムで割勘となった
 
-        \item このように希望通りになった側は相手の希望が分からず、
-        希望通りにならかった側は相手の希望を知ることができる
-      \end{itemize}
+          \item<2-> このように希望通りになった側は相手の希望が分からず、
+          希望通りにならかった側は相手の希望を知ることができる
+        \end{itemize}
+      }
     \end{column}
   \end{columns}
 \end{frame}
