@@ -433,7 +433,6 @@
   
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \pause
       \simplecallout[%
         {\includegraphics[width=\facesize]{./img/bob_face.png}}%
       ]{+}{orange!10}{%
@@ -471,28 +470,32 @@
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{+}{orange!10}{%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{+}{cyan!10}{%
         希望が場合によっては流出するのは\\
-        ゲーム性とみなすことができそう！\ce{:thinking_face:}
+        ゲーム性とみなすことができそう！\ce{:smiling_imp:}
       }
 
       \pause
       \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{-}{cyan!10}{%
-        しかし、この方法では\\
-        \textbf{高目の支払いを強いられたアリス}の\\
-        情報がリークすることがある\ce{:rage:}
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{-}{orange!10}{%
+        しかしこの方法では\\
+        アリスの希望は絶対にリークしない\ce{:rage:}
       }
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{itemize}
-        \item たとえば「アリスが割勘・ボブは奢りを希望」のとき、
+        \item たとえば「アリスが奢り・ボブは割勘を希望」のとき、
         結果は割勘となる。
-        ボブは奢りを回避してさらにアリスの上品さも知ることができる
+        
+        \item アリスは奢ってもらえないが、ボブのケチさを知ることができる
 
-        \item しかしアリスはボブの希望を知ることはできない
+        \item しかしアリスのがめつさ情報がリークすることはない
+
+        \pause
+        \item なぜなら\textbf{衝突}したときに
+        ``奢り''になるケースがないから
       \end{itemize}
     \end{column}
   \end{columns}
@@ -560,14 +563,14 @@
         }
       }
 
-      \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-        ]{-}{cyan!10}{%
-          互いの希望がマッチした場合には\\
-          情報が一切リークしない
-        }
-      }
+      % \uncover<+->{
+      %   \simplecallout[%
+      %     {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      %   ]{-}{cyan!10}{%
+      %     互いの希望がマッチした場合には\\
+      %     情報が一切リークしない
+      %   }
+      % }
 
       \footnotetext[3]{コイントス同様に奢り・割勘それぞれ$\frac{1}{2}$の確率}
     \end{column}
@@ -594,64 +597,6 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
-
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-  ]{+}{orange!10}{%
-    期待値的にはボブが不公平なままだが、\\
-    もし不本意に奢った場合はアリスのがめつさが分かる
-  }
-
-  \pause
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-  ]{-}{cyan!10}{%
-    このときアリスはボブの奢りが本意か\\
-    不本意か分からないが、奢られを得る
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
-
-  \begin{columns}
-    \begin{column}{0.6\textwidth}
-      \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-        ]{+}{cyan!10}{%
-          逆にアリスが不本意に\\
-          割勘となってしまった場合、\\
-          ボブの希望は割勘だと特定する
-        }
-      }
-
-      \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-        ]{-}{orange!10}{%
-          しかしこのときボブは\\
-          アリスの希望が分からない
-        }
-      }
-    \end{column}
-    \begin{column}{0.4\textwidth}
-      \uncover<+(-2)->{
-        \begin{itemize}
-          \item アリスが不本意に割勘となった場合、
-          アリスは奢りを希望していたがボブは割勘を希望しており、
-          ランダムで割勘となった
-
-          \item<2-> このように希望通りになった側は相手の希望が分からず、
-          希望通りにならかった側は相手の希望を知ることができる
-        \end{itemize}
-      }
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}
   \frametitle{手順}
 
   このプロトコルはチャーリー（\emph{trusted third party}）\textbf{なし}で達成できる
@@ -669,9 +614,10 @@
 
         \item \ballref{enum:cards_commited}で提出されたカードをシャッフルする
         
-        \item どちらか1枚をドローして表向きにする。カードを表\ref{tbl:card_meaning}に対応させた
-        ものがプロトコルの結果となる
+        \item どちらか1枚をドローして表向きにする \label{enum:result}
       \end{enumerate}
+
+      \ballref{enum:result}のカードを表\ref{tbl:card_meaning}に対応させてプロトコルの結果とする
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{table}[h]
@@ -750,6 +696,64 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
+
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+  ]{+}{orange!10}{%
+    期待値的にはボブが不公平なままだが、\\
+    もし不本意に奢った場合はアリスのがめつさが分かる
+  }
+
+  \pause
+  \simplecallout[%
+    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+  ]{-}{cyan!10}{%
+    このときアリスはボブの奢りが本意か\\
+    不本意か分からないが、奢られを得る
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{コイントスとAND計算のハイブリッドプロトコル}
+
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+        ]{+}{cyan!10}{%
+          逆にアリスが不本意に\\
+          割勘となってしまった場合、\\
+          ボブの希望は割勘だと特定する
+        }
+      }
+
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+        ]{-}{orange!10}{%
+          しかしこのときボブは\\
+          アリスの希望が分からない
+        }
+      }
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \uncover<+(-2)->{
+        \begin{itemize}
+          \item アリスが不本意に割勘となった場合、
+          アリスは奢りを希望していたがボブは割勘を希望しており、
+          ランダムで割勘となった
+
+          \item<2-> このように希望通りになった側は相手の希望が分からず、
+          希望通りにならかった側は相手の希望を知ることができる
+        \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \section{まとめ}
 
 \begin{frame}
@@ -758,6 +762,9 @@
   \pause
   \begin{itemize}
     \item<+-> 簡単なプロトコルで奢り・割勘問題に決着をつけられるかもしれない
+    \begin{itemize}
+      \item 2人の参加者は安目・高目と情報を賭博する
+    \end{itemize}
 
     \item<+-> 今回紹介した技術は``Covert Lottery\cite{covert_lottery}''という名前が付いている
     \begin{itemize}
