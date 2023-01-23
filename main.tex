@@ -474,7 +474,7 @@
         {\includegraphics[width=\facesize]{./img/bob_face.png}}%
       ]{+}{orange!10}{%
         希望が場合によっては流出するのは\\
-        ゲーム性とみなすことができそう！\ce{:thinkig_face:}
+        ゲーム性とみなすことができそう！\ce{:thinking_face:}
       }
 
       \pause
@@ -499,6 +499,50 @@
 \end{frame}
 
 \section{提案手法}
+
+\begin{frame}
+  \frametitle{2人の希望の衝突}
+
+  \pause
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \uncover<+-> {
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+        ]{+}{cyan!10}{%
+          2人の希望が一致したケースなら\\
+          AND計算で問題ない
+        }
+      }
+
+      \uncover<+->{
+        \simplecallout[%
+          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+        ]{-}{orange!10}{%
+          一方で衝突（\textit{conflict}）した\\
+          ケースは考える必要がある
+        }
+      }
+    \end{column}
+    \uncover<1->{
+      \begin{column}{0.4\textwidth}
+          \begin{table}[h]
+            \renewcommand{\arraystretch}{1.5}
+            \caption{現状のコンセンサス}
+            \label{tbl:conflict}
+            \begin{tabularx}{0.9\textwidth}{@{}| Y | Y | X @{}}
+              \cline{1-2}
+              アリス & ボブ & \\ \cline{1-2}
+              割勘  & 割勘 & \multirow{2}{\hsize}{$\Bigg\}$\ce{:person_gesturing_ok:}}\\ \cline{1-2}
+              奢り  & 奢り &  \\ \cline{1-2}
+              割勘  & 奢り & \multirow{2}{\hsize}{$\Bigg\}$\ce{:person_gesturing_no:}} \\ \cline{1-2}
+              奢り  & 割勘 &   \\ \cline{1-2}
+            \end{tabularx}
+          \end{table}
+      \end{column}
+    }
+  \end{columns}
+\end{frame}
 
 \begin{frame}
   \frametitle{コイントスとAND計算のハイブリッドプロトコル}
@@ -530,7 +574,7 @@
           \begin{table}[h]
             \caption{奢り・割勘と情報リーク}
             \label{tbl:choice_and_info_leak}
-            \begin{tabular}{|l|l|c|c|}
+            \begin{tabular}{|c|c|c|c|}
               \hline
               アリス & ボブ & 結果   & 情報 \\ \hline
               割勘  & 割勘 & 割勘   & \dagger \\ \hline
@@ -643,8 +687,64 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{ケーススタディ}
+  \frametitle{ケーススタディ\ballcircle{1} --- 2人の希望が一致}
 
+  \pause
+  \begin{itemize}
+    \item<+-> 2人の希望が一致しているので次のようなケース
+      \begin{columns}
+        \begin{column}{0.5\textwidth}
+          \simplecallout[%
+            {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+          ]{+}{cyan!10}{\heartcard}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+          \simplecallout[%
+            {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+          ]{-}{orange!10}{\heartcard}
+        \end{column}
+      \end{columns}
+
+    \item<+-> これらをシャッフルして1枚選んだときは必ず\heartcard となる
+
+    \item<+-> そしてこのときアリス・ボブは相手のカードについて
+    \begin{itemize}
+      \item 両方とも\heartcard だったのか
+      \item 相手は\clubcard だったがランダムで\heartcard が選ばれたのか
+    \end{itemize}
+    \ce{:point_up:}のどちらなのか分からず、情報リークはない
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{ケーススタディ\ballcircle{2} --- 2人の希望が衝突}
+
+  \begin{itemize}
+    \item<+-> 2人の希望が衝突しているので次のようなケース
+      \begin{columns}
+        \begin{column}{0.5\textwidth}
+          \simplecallout[%
+            {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+          ]{+}{cyan!10}{\heartcard}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+          \simplecallout[%
+            {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+          ]{-}{orange!10}{\clubcard}
+        \end{column}
+      \end{columns}
+
+    \item<+-> これらをシャッフルしてランダムに選べば、結果は\heartcard,\clubcard それぞれ$\frac{1}{2}$の確率になる
+    \begin{description}
+      \item[結果が\clubcard]<+->\mbox{}\\
+      \begin{itemize}
+        \item ボブの希望通りとなり、ボブはアリスの希望通りかランダムの結果か不明
+        \item アリスは衝突してボブの希望\clubcard になったと特定
+      \end{itemize}
+
+      \item[結果が\heartcard] 同様
+    \end{description}
+  \end{itemize}
 \end{frame}
 
 \section{まとめ}
@@ -657,8 +757,11 @@
     \item<+-> 簡単なプロトコルで奢り・割勘問題に決着をつけられるかもしれない
 
     \item<+-> 今回紹介した技術は``Covert Lottery\cite{covert_lottery}''という名前が付いている
+    \begin{itemize}
+      \item Covert Lotteryを量子コンピューターでやるという記事\cite{quantum_covert_lottery}を過去に書いた
+    \end{itemize}
 
-    \item<+-> 今回は2人だったが、これを多人数拡張すると別のゲームに使えるかもしれない
+    \item<+-> 今回は2人だったが、これを多人数拡張すると別のゲームに使えるかも\ce{:thinking_face:}
   \end{itemize}
 \end{frame}
 
