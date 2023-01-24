@@ -203,6 +203,7 @@
 
 \presetkeys{todonotes}{inline, noinlinepar}{}
 
+\renewcommand{\arraystretch}{1.2}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \title[奢り・割勘プロトコル]{%
@@ -337,8 +338,7 @@
         \pause
         \item 表\ref{tbl:coin_meaning}に基づいて決定する
       \end{enumerate}
-    \end{column}
-    \begin{column}{0.5\textwidth}
+
       \begin{table}[h]
         \caption{コインの意味}
         \label{tbl:coin_meaning}
@@ -350,21 +350,23 @@
         \end{tabularx}
       \end{table}
     \end{column}
+    \begin{column}{0.5\textwidth}
+      \pause
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
+      ]{+}{orange!10}{%
+        2人の意見が何も反映されないため\\
+        プライバシーは完全\ce{:person_gesturing_ok:}
+      }
+    
+      \pause
+      \simplecallout[%
+        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
+      ]{-}{cyan!10}{%
+        しかしゲーム性は全くない
+      }
+    \end{column}
   \end{columns}
-
-  \pause
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-  ]{+}{orange!10}{%
-    2人の意見が何も反映されないためプライバシーは完全\ce{:person_gesturing_ok:}
-  }
-
-  \pause
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-  ]{-}{cyan!10}{%
-    しかしゲーム性は全くない
-  }
 \end{frame}
 
 \begin{frame}
@@ -421,10 +423,8 @@
   }
 
   \begin{itemize}
-    \item<+(-1)-> ボブは$\frac{3}{4}$の確率で50\%の支払い、
-    $\frac{1}{4}$の確率で100\%の支払いなので期待値は$\frac{5}{8}$（62.5\%）の支払い
-
-    \item<+(-1)-> 同様の計算でアリスは期待値$\frac{3}{8}$（37.5\%）の支払い
+    \item<+(-1)-> ボブは期待値は$\frac{5}{8}$（62.5\%）の支払い、
+    アリスは期待値$\frac{3}{8}$（37.5\%）の支払い
   \end{itemize}
 \end{frame}
 
@@ -530,7 +530,6 @@
     \uncover<1->{
       \begin{column}{0.4\textwidth}
           \begin{table}[h]
-            \renewcommand{\arraystretch}{1.5}
             \caption{現状のコンセンサス}
             \label{tbl:conflict}
             \begin{tabularx}{0.9\textwidth}{@{}| Y | Y | X @{}}
@@ -612,7 +611,6 @@
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{table}[h]
-        \renewcommand{\arraystretch}{1.5}
         \caption{カードの意味}
         \label{tbl:card_meaning}
         \begin{tabularx}{0.9\textwidth}{@{}| Y | Y |@{}}
