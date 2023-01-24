@@ -2,7 +2,7 @@
 
 set -eo
 
-TARGET="carbon_neutral"
+TARGET="fair_or_all"
 
 make
 
