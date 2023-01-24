@@ -221,6 +221,14 @@
 \institute[\InsertEmail]{株式会社リクルート（Recruit Co., Ltd）}
 \GitHub{y-yu/fair-or-all-slide}
 
+\newcommand{\facesize}{1cm}
+\newcommand\alicecallout[2]{
+  \simplecallout[{\includegraphics[width=\facesize]{./img/alice_face.png}}]{#1}{cyan!10}{#2}
+}
+\newcommand\bobcallout[2]{
+  \simplecallout[{\includegraphics[width=\facesize]{./img/bob_face.png}}]{#1}{orange!10}{#2}
+}
+
 \begin{document}
 
 \frame{\maketitle}
@@ -323,8 +331,6 @@
 
 \section{従来手法}
 
-\newcommand{\facesize}{1cm}
-
 \begin{frame}
   \frametitle{従来手法\ballcircle{1} --- コイントス}
 
@@ -352,19 +358,12 @@
     \end{column}
     \begin{column}{0.5\textwidth}
       \pause
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{+}{orange!10}{%
-        2人の意見が何も反映されないため\\
-        プライバシーは完全\ce{:person_gesturing_ok:}
+      \bobcallout{+}{2人の意見が何も反映されないため\\
+        プライバシーは完全\ce{:person_gesturing_ok:}%
       }
     
       \pause
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{-}{cyan!10}{%
-        しかしゲーム性は全くない
-      }
+      \alicecallout{-}{しかしゲーム性は全くない}
     \end{column}
   \end{columns}
 \end{frame}
@@ -374,16 +373,10 @@
 
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{+}{cyan!10}{%
-        そもそもこのゲームはアリスが有利\ce{:smiling_imp:}
-      }
+      \alicecallout{+}{そもそもこのゲームはアリスが有利\ce{:smiling_imp:}}
 
       \pause
-      \simplecallout[%
-       {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{-}{orange!10}{%
+      \bobcallout{-}{%
         そもそも不公平なゲームなので、\\
         50:50ではおもしろくない
       }
@@ -433,17 +426,11 @@
   
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{+}{orange!10}{%
-        そもそもチャーリーが信頼できるのか？
+      \bobcallout{+}{そもそもチャーリーが信頼できるのか？
       }
 
       \pause
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{-}{cyan!10}{%
-        \noindent
+      \alicecallout{-}{\noindent
         次のケース\ce{:point_down:}で\textbf{情報リーク}が生じる！\\
         \hbox to 0.5\textwidth{%
           \vbox{%
@@ -469,19 +456,13 @@
 
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-      ]{+}{cyan!10}{%
-        希望が場合によっては流出するのは\\
+      \alicecallout{+}{希望が場合によっては流出するのは\\
         ゲーム性とみなすことができそう！\ce{:smiling_imp:}
       }
 
       \pause
-      \simplecallout[%
-        {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-      ]{-}{orange!10}{%
-        しかしこの方法では\\
-        アリスの希望は絶対にリークしない\ce{:rage:}
+      \bobcallout{-}{しかしこの方法では\\
+        アリスの希望は絶対にリークしない\ce{:rage:}%
       }
     \end{column}
     \begin{column}{0.4\textwidth}
@@ -501,8 +482,6 @@
   \end{columns}
 \end{frame}
 
-\section{提案手法}
-
 \begin{frame}
   \frametitle{2人の希望の衝突}
 
@@ -510,18 +489,14 @@
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \uncover<+-> {
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-        ]{+}{cyan!10}{%
+        \alicecallout{+}{%
           2人の希望が一致したケースなら\\
-          AND計算で問題ない
+          AND計算で問題ない%
         }
       }
 
       \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-        ]{-}{orange!10}{%
+        \bobcallout{-}{%
           一方で衝突（\textit{conflict}）した\\
           ケースは考える必要がある
         }
@@ -546,16 +521,41 @@
   \end{columns}
 \end{frame}
 
+\section{提案手法}
+
+\begin{frame}
+  \centering
+  \begin{columns}
+    \begin{column}{0.2\textwidth}
+      \begin{minipage}[t][.8\textheight][t]{\textwidth}
+        \tableofcontents[currentsection]
+      \end{minipage}
+    \end{column}
+    \begin{column}{0.8\textwidth}
+      \centering
+      \begin{columns}
+        \begin{column}{0.45\columnwidth}
+          \alicecallout{-}{\huge コイントス}
+        \end{column}
+        \begin{column}{0.45\columnwidth}
+          \bobcallout{+}{\huge AND計算}
+        \end{column}
+      \end{columns}
+      {\centering\huge%
+        $\underbrace{\hphantom{\rule{\columnwidth}{0ex}}}_{}$\\
+        \mcfamily\rmfamily\bfseries ハイブリッドプロトコル%
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}
   \frametitle{コイントスとAND計算のハイブリッドプロトコル}
 
-  \pause
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \uncover<+-> {
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-        ]{+}{orange!10}{%
+        \bobcallout{+}{%
           表\ref{tbl:choice_and_info_leak}のようにランダム\footnotemark[3] を導入したうえで、\\
           不本意な結果を強いられた側だけが\\
           相手の希望を得るというのはどうか？
@@ -632,14 +632,10 @@
     \item<+-> 2人の希望が一致しているので次のようなケース
       \begin{columns}
         \begin{column}{0.5\textwidth}
-          \simplecallout[%
-            {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-          ]{+}{cyan!10}{\heartcard}
+          \alicecallout{+}{\heartcard}
         \end{column}
         \begin{column}{0.5\textwidth}
-          \simplecallout[%
-            {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-          ]{-}{orange!10}{\heartcard}
+          \bobcallout{-}{\heartcard}
         \end{column}
       \end{columns}
 
@@ -661,26 +657,22 @@
     \item<+-> 2人の希望が衝突しているので次のようなケース
       \begin{columns}
         \begin{column}{0.5\textwidth}
-          \simplecallout[%
-            {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-          ]{+}{cyan!10}{\heartcard}
+          \alicecallout{+}{\heartcard}
         \end{column}
         \begin{column}{0.5\textwidth}
-          \simplecallout[%
-            {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-          ]{-}{orange!10}{\clubcard}
+          \bobcallout{-}{\clubcard}
         \end{column}
       \end{columns}
 
     \item<+-> これらをシャッフルしてランダムに選べば、結果は\heartcard,\clubcard それぞれ$\frac{1}{2}$の確率になる
     \begin{description}
-      \item[結果が\clubcard]<+->\mbox{}\\
+      \item[結果が\heartcard]<+->\mbox{}\\
       \begin{itemize}
-        \item ボブの希望通りとなり、ボブはアリスの希望通りかランダムの結果か不明
-        \item アリスは衝突してボブの希望\clubcard になったと特定
+        \item アリスの希望通りとなるが、結果がボブの希望通りかランダムか不明
+        \item ボブは衝突してアリスの希望\clubcard になったと特定
       \end{itemize}
 
-      \item[結果が\heartcard]<+-> 同様
+      \item[結果が\clubcard]<+-> 同様
     \end{description}
   \end{itemize}
 \end{frame}
@@ -688,17 +680,13 @@
 \begin{frame}
   \frametitle{コイントスとAND計算のハイブリッドプロトコル}
 
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-  ]{+}{orange!10}{%
+  \bobcallout{+}{%
     期待値的にはボブが不公平なままだが、\\
     もし不本意に奢った場合はアリスのがめつさが分かる
   }
 
   \pause
-  \simplecallout[%
-    {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-  ]{-}{cyan!10}{%
+  \alicecallout{-}{%
     このときアリスはボブの奢りが本意か\\
     不本意か分からないが、奢られを得る
   }
@@ -710,9 +698,7 @@
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/alice_face.png}}%
-        ]{+}{cyan!10}{%
+        \alicecallout{+}{%
           逆にアリスが不本意に\\
           割勘となってしまった場合、\\
           ボブの希望は割勘だと特定する
@@ -720,9 +706,7 @@
       }
 
       \uncover<+->{
-        \simplecallout[%
-          {\includegraphics[width=\facesize]{./img/bob_face.png}}%
-        ]{-}{orange!10}{%
+        \bobcallout{-}{%
           しかしこのときボブは\\
           アリスの希望が分からない
         }
